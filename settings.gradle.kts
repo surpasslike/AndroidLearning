@@ -27,5 +27,5 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "AndroidLearning"
-include(":app")
- 
+include(":VehicleServer")
+include(":Dashboard")
