@@ -1,8 +1,10 @@
 // IVehicleData.aidl
 package com.surpasslike.androidlearning;
-
-// Declare any non-default types here with import statements
+import com.surpasslike.androidlearning.IVehicleCallback;
 
 interface IVehicleData {
-    int getSpeed();
+    // 注册回调
+    void registerVehicleCallback(IVehicleCallback callback);
+     // 注销回调
+    void unregisterVehicleCallback(IVehicleCallback callback);
 }
