@@ -11,7 +11,13 @@ public class VehicleService extends Service {
     private final String TAG = "VehicleService";
     private final RemoteCallbackList<IVehicleCallback> mCallbackList = new RemoteCallbackList<>();
     private boolean isRunning = true;
-    private int mCurrentSpeed = 0;
+
+    /*
+     * 用volatile的优势:
+     * 1.可见性：一个线程修改后，其他线程立刻能看到最新值
+     * 2.禁止重排序：编译器不会把这个变量的读写顺序打乱
+     * */
+    private volatile int mCurrentSpeed = 0;
 
     @Override
     public void onCreate() {
