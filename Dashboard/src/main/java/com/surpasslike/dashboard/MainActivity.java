@@ -41,14 +41,14 @@ public class MainActivity extends AppCompatActivity {
         bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
     }
 
-    private IVehicleCallback mCallback = new IVehicleCallback.Stub() {
+    private final IVehicleCallback mCallback = new IVehicleCallback.Stub() {
         @Override
         public void onSpeedChanged(int speed) throws RemoteException {
             runOnUiThread(() -> tvCurrentSpeed.setText("当前车速：" + speed + " km/h"));
         }
     };
 
-    private ServiceConnection serviceConnection = new ServiceConnection() {
+    private final ServiceConnection serviceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             Log.d(TAG, "连接成功");
@@ -66,4 +66,25 @@ public class MainActivity extends AppCompatActivity {
             mVehicleDataService = null;
         }
     };
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        // 反注册回调（礼貌打招呼）
+        if (mVehicleDataService != null && mVehicleDataService.asBinder().isBinderAlive()) {
+            try {
+                mVehicleDataService.unregisterVehicleCallback(mCallback);
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        // 解绑服务
+        try {
+            unbindService(serviceConnection);
+        } catch (Exception e) {
+            // 防止重复解绑崩溃
+        }
+    }
 }
