@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
+import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 
@@ -31,6 +32,33 @@ class MainActivity : AppCompatActivity() {
 
         // 注册广播接收器,把门铃系统安装并启用。只有注册了，才能收到广播。
         registerReceiver(networkReceiver, filter)
+
+        // 调试按钮，点击触发DebugReceiver调试功能
+        val btnDebug = findViewById<Button>(R.id.btn_debug)
+        btnDebug.setOnClickListener {
+            val theIntent = Intent(DebugReceiver.ACTION).apply {
+                putExtra("TYPE", 0)
+                putExtra("PA1", 1)
+            }
+            theIntent.setPackage(packageName)
+            sendBroadcast(theIntent)
+        }
+
+        /*
+        * 语法解释:
+        * **apply 是什么？** 一个"作用域函数"，让你对对象连续操作
+        * // 用 apply（简洁）
+            val intent = Intent(DebugReceiver.ACTION).apply {
+                putExtra("TYPE", 0)
+                putExtra("PA1", 1)
+            }
+
+            // 不用 apply（繁琐）
+            val intent = Intent(DebugReceiver.ACTION)
+            intent.putExtra("TYPE", 0)
+            intent.putExtra("PA1", 1)
+        *
+        * */
     }
 
     private fun checkNetworkStatus() {
