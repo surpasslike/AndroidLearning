@@ -1,16 +1,17 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.kotlin.compose)
 }
 
 android {
     namespace = "com.surpasslike.androidlearning"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.surpasslike.androidlearning"
         minSdk = 34
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -35,11 +36,6 @@ android {
     // --- 重点：添加 Compose 配置 ---
     buildFeatures {
         compose = true
-    }
-
-    composeOptions {
-        // 对应你的 Kotlin 1.9.0 版本
-        kotlinCompilerExtensionVersion = "1.5.1"
     }
 
     compileOptions {
