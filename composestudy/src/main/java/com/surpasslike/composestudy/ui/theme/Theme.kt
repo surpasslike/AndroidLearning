@@ -35,10 +35,10 @@ private val LightColorScheme = lightColorScheme(
 
 @Composable
 fun AndroidLearningTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    darkTheme: Boolean = isSystemInDarkTheme(), // 深色模式开关
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
-    content: @Composable () -> Unit
+    dynamicColor: Boolean = true, // 变色龙模式:开启后, app 的按钮背景色等会根据用户手机桌面的壁纸颜色自动调整,Build.VERSION_CODES.S是为了判断当前系统是否支持这个功能
+    content: @Composable () -> Unit // 插槽. 坑位, 大括号里面的代码都是从这个content传进来, 穿上这个主题的外衣
 ) {
     val colorScheme = when {
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
